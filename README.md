@@ -55,16 +55,58 @@ _Note that `admitted_by` is a foreign key to the employee table._
 Create the following routes as efficiently as possible, using validation where appropriate:
 
 1. **Add new patient**: Create a route to add a new patient.
+![Captura de pantalla 2025-04-29 161307.png](Captura%20de%20pantalla%202025-04-29%20161307.png)
 2. **Add new doctor**: Create a route to add a new doctor.
+![Captura de pantalla 2025-04-29 161826.png](Captura%20de%20pantalla%202025-04-29%20161826.png)
 3. **Change doctor status**: Create a route to change a doctor's status.
+![Captura de pantalla 2025-04-29 155514.png](Captura%20de%20pantalla%202025-04-29%20155514.png)
 4. **Update doctor's department**: Create a route to update a doctor's department.
+![Captura de pantalla 2025-04-29 155645.png](Captura%20de%20pantalla%202025-04-29%20155645.png)
 5. **Update patient information**: Create a route to update patient information (the user should be able to update any patient information through this route).
+![Captura de pantalla 2025-04-29 162048.png](Captura%20de%20pantalla%202025-04-29%20162048.png)
 6. **Write a short answer in README.md**. In your `README.md`, write a short answer to the following questions:
 
    - Did you use the same type of route to update patient information as to update an employee's department?
+     No, no usé el mismo tipo de ruta. Para actualizar la información del paciente, utilicé una ruta PUT (/api/patients/{id}), mientras que para actualizar el departamento de un empleado, utilicé una ruta PATCH (/api/doctors/{id}/department).
    - Why did you choose the selected strategy?
+     Elegí PUT para actualizar la información del paciente porque PUT se utiliza convencionalmente para reemplazar toda la entidad. En este caso, la actualización del paciente permite modificar varios campos (nombre, fecha de nacimiento, doctor asignado), por lo que PUT es más semánticamente correcto.
+     Elegí PATCH para actualizar el departamento del empleado porque PATCH está diseñado para modificar partes de una entidad.  Actualizar el departamento es una actualización parcial; no estamos cambiando toda la información del empleado, sino solo un campo específico.
    - What are the advantages and disadvantages of the strategies you chose for creating these routes?
+     PUT (actualizar paciente)
+     Ventajas:
+
+Es claro: reemplaza todo el paciente.
+
+Es seguro repetirlo: si haces el mismo PUT varias veces, el resultado no cambia.
+
+Desventajas:
+
+Tienes que mandar todos los datos del paciente, aunque solo cambies uno.
+
+La petición puede ser más pesada.
+
+PATCH (actualizar departamento)
+Ventajas:
+
+Solo mandas lo que quieres cambiar, nada más.
+
+Es ideal para cambios pequeños.
+
+Desventajas:
+
+No siempre da el mismo resultado si se repite.
+
+Puede ser más difícil de programar en el servidor.
+
    - What is the cost-benefit between using `PUT` and `PATCH`?
+     Coste-Beneficio de PUT:
+
+Coste: Mayor uso de ancho de banda (se envían todos los datos).
+Beneficio: Simplicidad en la implementación (el servidor simplemente reemplaza la entidad), claridad semántica e idempotencia.
+Coste-Beneficio de PATCH:
+
+Coste: Mayor complejidad en la implementación del servidor (manejo de actualizaciones parciales), menor claridad sobre la idempotencia.
+Beneficio: Menor uso de ancho de banda (se envían solo los datos modificados), mayor eficiencia en las actualizaciones parciales.
 
 <br>  
 
